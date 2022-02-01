@@ -1,0 +1,57 @@
+﻿@page "/"
+
+
+<div class="container">
+    <header>
+        <h1>Breaking Bad API</h1>
+        <h5>Search for a character: </h5>
+        <input type="text" @bind="searchString" @bind:event="oninput" />
+    </header>
+
+    <main>
+
+        @if (characters != null)
+        {
+            foreach (var character in displayCharacters)
+            {
+                <div class="card">
+                    <h1>@character.name</h1>
+                    <h2>@character.status</h2>
+                    <img src="@character.img" />
+                    @foreach (var occupation in character.occupation)
+                    {
+                        <h3>@occupation</h3>
+                    }
+                </div>
+            }
+        }
+
+
+    </main>
+</div>
+
+@code {
+    string searchString = string.Empty;
+    HttpRequestMessage requestMessage;
+    HttpResponseMessage responseMessage;
+    HttpClient htp;
+    List<Character> displayCharacters => characters.Where(c => c.name.ToUpper().Contains(searchString.ToUpper())).ToList();
+    List<Character> characters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        htp = new HttpClient();
+        requestMessage = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri(@"https://breakingbadapi.com/api/characters")
+        };
+
+        responseMessage = await htp.SendAsync(requestMessage);
+        characters = JsonSerializer.Deserialize<List<Character>>(await responseMessage.Content.ReadAsStringAsync());
+    }
+
+
+
+}
+

@@ -12,7 +12,7 @@ html, body {
 }
 
 header {
-    background-color: #e1bad5;
+    background-color: #185964;
     display: grid;
     justify-items: center;
     align-items: center;
@@ -40,7 +40,7 @@ main {
     display: flex;
     flex-direction: column;
     width: 350px;
-    border: 4px solid #e1bad5;
+    border: 4px solid #185964;
     border-radius: 5px;
     max-height: 670px;
 }
@@ -53,3 +53,10 @@ main {
     .card img {
         height: 400px;
     }
+.invisible {
+    display: none;
+   
+}
+p {
+    text-align: center;
+}

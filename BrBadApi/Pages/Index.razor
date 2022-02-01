@@ -14,15 +14,19 @@
         {
             foreach (var character in displayCharacters)
             {
-                <div class="card">
-                    <h1>@character.name</h1>
-                    <h2>@character.status</h2>
-                    <img src="@character.img" />
-                    @foreach (var occupation in character.occupation)
-                    {
-                        <h3>@occupation</h3>
-                    }
-                </div>
+        <div class="card">
+            <h1>@character.name</h1>
+            <h3>@character.status</h3>
+            <img src="@character.img" @onmouseover="occupationReveal" />
+
+
+            @foreach (var occupation in character.occupation)
+            {
+                <h5 class=@(occupationShow ? "invisible" : null)>@occupation</h5>
+            }
+            <p class=@(Reveal ? "invisible" : null) @onmouseover="nicknameReveal">Reveal nickname</p>
+            <p class=@(Reveal ? null : "invisible") @onmouseout="nicknameReveal">@character.nickname</p>
+        </div>
             }
         }
 
@@ -50,7 +54,19 @@
         responseMessage = await htp.SendAsync(requestMessage);
         characters = JsonSerializer.Deserialize<List<Character>>(await responseMessage.Content.ReadAsStringAsync());
     }
+    bool Reveal = false;
 
+    void nicknameReveal()
+    {
+        Reveal = !Reveal;
+    }
+
+    bool occupationShow = false;
+
+    void occupationReveal()
+    {
+        occupationShow = !occupationShow;
+    }
 
 
 }

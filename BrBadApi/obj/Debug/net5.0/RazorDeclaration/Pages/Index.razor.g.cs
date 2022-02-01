@@ -105,7 +105,7 @@ using System.Net.Http.Headers;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 33 "C:\Users\Tatyana\source\repos\BrBadApi\BrBadApi\Pages\Index.razor"
+#line 37 "C:\Users\Tatyana\source\repos\BrBadApi\BrBadApi\Pages\Index.razor"
        
     string searchString = string.Empty;
     HttpRequestMessage requestMessage;
@@ -126,7 +126,19 @@ using System.Net.Http.Headers;
         responseMessage = await htp.SendAsync(requestMessage);
         characters = JsonSerializer.Deserialize<List<Character>>(await responseMessage.Content.ReadAsStringAsync());
     }
+    bool Reveal = false;
 
+    void nicknameReveal()
+    {
+        Reveal = !Reveal;
+    }
+
+    bool occupationShow = false;
+
+    void occupationReveal()
+    {
+        occupationShow = !occupationShow;
+    }
 
 
 
